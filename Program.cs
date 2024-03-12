@@ -1,53 +1,46 @@
-﻿using System.Collections;
+using System.Collections;
 
 internal class Program
 {
-
+    // Основной метод, который будет вызван при запуске программы
     static void Main(string[] args)
     {
         {
-            ArrayList array = new ArrayList();
+            ArrayList array = new ArrayList(); // Создаем новый экземпляр ArrayList и ChainList
             ChainList chain = new ChainList();
 
-            Random rnd = new Random();
-            for (int i = 0; i < 10; i++)
+            Random rnd = new Random(); // Создаем новый генератор случайных чисел
+            for (int i = 0; i < 10; i++) // Цикл для выполнения случайных операций
             {
-                int operation = rnd.Next(4);
-                int item = rnd.Next(10);
-                int pos = rnd.Next(10);
+                int operation = rnd.Next(4); // Генерируем случайное число для выбора операции
+                int item = rnd.Next(10); // Генерируем случайное число для элемента
+                int pos = rnd.Next(10);  // Генерируем случайное число для позиции
                 switch (operation)
                 {
-                    case 1:
-                        array.Add(item);
+                    case 1: // Добавляем элемент в оба списка
+                        array.Add(item);  
                         chain.Add(item);
                         break;
-                    case 2:
-                        array.Delete(pos);
+                    case 2: // Удаляем элемент на указанной позиции из обоих списков
+                        array.Delete(pos);  
                         chain.Delete(pos);
                         break;
-                    case 3:
+                    case 3:  // Вставляем элемент на указанную позицию в оба списка
                         array.Insert(pos, item);
                         chain.Insert(pos, item);
                         break;
-                    case 4:
+                    case 4: // Очищаем оба списка
                         array.Clean();
                         chain.Clean();
                         break;
                 }
             }
-
+            // Выводим содержимое обоих списков
             array.Print();
             Console.WriteLine();
             chain.Print();
 
-            int count = 0;
-            for (int i = 0; i < array.Count; i++)
-            {
-                if (array[i] != chain[i]) { count++; }
-            }
-            Console.WriteLine($"\nКол-во несоответсвий: {count}");
-            Console.WriteLine($"\nМода chain: {chain.Moda}");
-            Console.WriteLine($"\nМода array: {array.Moda}");
+         
         }
     }
 }
