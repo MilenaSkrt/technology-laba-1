@@ -1,50 +1,51 @@
 class ArrayList
 {
 
-    int[] buffer = null;
-    int count = 0;
+    int[] buffer = null; // массив для хранения элементов списка
+	int count = 0; // количество элементов в списке
 
-    void Expand()
-    {
-        if (count == 0) { this.buffer = new int[1]; }
-        else
+	void Expand()  // Метод расширения массива
+	{
+        if (count == 0) { this.buffer = new int[1]; } // если список пуст, создаем массив с одним элементом
+		else
         {
             if (count == this.buffer.Length)
             {
-                int[] buffer = new int[this.buffer.Length * 2];
+                int[] buffer = new int[this.buffer.Length * 2];   // создаем новый массив в два раза больший и копируем элементы
 
-                for (int i = 0; i < count; i++) { buffer[i] = this.buffer[i]; }
+				for (int i = 0; i < count; i++) { buffer[i] = this.buffer[i]; }
 
                 this.buffer = buffer;
             }
         }
     }
 
-    void Compression()
-    {
+    void Compression() // Метод сжатия массива
+	{
         if (count <= buffer.Length / 2)
         {
-            int[] buffer = new int[this.buffer.Length / 2];
+            int[] buffer = new int[this.buffer.Length / 2]; // создаем новый массив в два раза меньший и копируем элементы
 
-            for (int i = 0; i < count; i++) { buffer[i] = this.buffer[i]; }
+			for (int i = 0; i < count; i++) { buffer[i] = this.buffer[i]; }
 
             this.buffer = buffer;
         }
     }
 
-    public void Add(int value)
-    {
-        Expand();
-        buffer[count++] = value;
-    }
+    public void Add(int value) // Метод добавления элемента в конец списка
+	{
+        Expand(); // расширяем массив при необходимости
+		buffer[count++] = value; // добавляем элемент в конец и увеличиваем счетчик
+	}
 
-    public void Insert(int value, int position)
-    {
+    public void Insert(int value, int position)  // Метод вставки элемента по указанной позиции
+	{
         if (position < count && position >= 0)
         {
-            Expand();
+            Expand();// расширяем массив
+					 // сдвигаем элементы вправо и вставляем новый элемент на указанную позицию
 
-            for (int i = count - 1; i >= position; i--)
+			for (int i = count - 1; i >= position; i--)
             { buffer[i + 1] = buffer[i]; }
 
             buffer[position] = value;
@@ -53,39 +54,39 @@ class ArrayList
         }
         else
         {
-            Add(value);
-        }
+            Add(value); // если позиция некорректная, добавляем элемент в конец
+		}
     }
 
-    public void Clean()
-    {
+    public void Clean() // Метод очистки списка
+	{
         buffer = null;
         count = 0;
     }
 
-    public void Delete(int position)
-    {
-        if (count == 1 && position == 0) { Clean(); }
-        else
+    public void Delete(int position) // Метод удаления элемента по указанной позиции
+	{
+        if (count == 1 && position == 0) { Clean(); } // если в списке остался один элемент, очищаем список
+		else
         {
             if (position < count && position >= 0)
             {
-                for (int i = position; i < count - 1; i++) { buffer[i] = buffer[i + 1]; }
+                for (int i = position; i < count - 1; i++) { buffer[i] = buffer[i + 1]; } // сдвигаем элементы влево и уменьшаем счетчик
 
-                buffer[count-- - 1] = 0;
+				buffer[count-- - 1] = 0;
 
-                Compression();
-            }
+                Compression(); // сжимаем массив при необходимости
+			}
         }
     }
 
-    public int Count
-    {
+    public int Count // Свойство для получения количества элементов в списке
+	{
         get { return count; }
     }
 
-    public int this[int position]
-    {
+    public int this[int position] // Индексатор для доступа к элементам списка
+	{
         get
         {
             if (position >= count || position < 0)
@@ -100,8 +101,8 @@ class ArrayList
         }
     }
 
-    public void Print()
-    {
+    public void Print()  // Метод для вывода списка на экран
+	{
         Console.Write("[");
         for (int i = 0; i < count; i++)
         {
@@ -113,28 +114,5 @@ class ArrayList
         Console.WriteLine("]");
     }
 
-    public int Moda
-    {
-        get
-        {
-            if (count == 0) return -1;
-            int maxCount = 0;
-            int moda = 0;
-            for (int i = 0; i < this.count; i++)
-            {
-                int count = 0;
 
-                for (int j = 0; j < this.count; j++)
-                    if (buffer[i] == buffer[j]) count++;
-
-
-                if (count > maxCount)
-                {
-                    maxCount = count;
-                    moda = buffer[i];
-                }
-            }
-            return moda;
-        }
     }
-}
